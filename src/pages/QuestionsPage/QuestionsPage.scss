@@ -1,0 +1,8 @@
+@import "../../styles/vars.scss";
+
+.container_questions {
+  padding-top: 41px;
+  padding-bottom: 130px;
+  @include flex(flex, row, space-between, start);
+  gap: 20px;
+}
