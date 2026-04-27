@@ -1,0 +1,52 @@
+@import "@app/styles/vars.scss";
+
+.header {
+  background-color: var(--white-color);
+  .container_header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    @include flex(flex, row, space-between, center);
+    .nav {
+      @include flex(flex, row, start, center);
+      .logo {
+        a {
+          width: 172px;
+          @include flex(flex, row, start, center);
+          .logo-image {
+            margin-right: 10px;
+          }
+        }
+      }
+      .nav-list {
+        @include flex(flex, row, start, center);
+        gap: 20px;
+        .nav-item {
+          list-style: none;
+          .nav-link {
+            @include font(16px, 500, 140%);
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+    .buttons {
+      @include flex(flex, row, start, center);
+      gap: 26px;
+      .button--white {
+        border: none;
+        background-color: transparent;
+        color: var(--purple-color);
+        @include font(16px, 600, 110%);
+      }
+      .button--purple {
+        border: none;
+        width: 170px;
+        height: 48px;
+        background-color: var(--purple-color);
+        color: var(--white-color);
+        @include font(18px, 500, 100%);
+        border-radius: 12px;
+      }
+    }
+  }
+}

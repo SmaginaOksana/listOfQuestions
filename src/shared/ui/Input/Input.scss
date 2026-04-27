@@ -1,0 +1,17 @@
+@import "@app/styles/vars.scss";
+
+input {
+  color: #303030;
+  @include font(16px, 400, 130%);
+  border: none;
+  &::placeholder {
+    color: #a3a3a3;
+    @include font(16px, 400, 130%);
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus::placeholder {
+    opacity: 0;
+  }
+}

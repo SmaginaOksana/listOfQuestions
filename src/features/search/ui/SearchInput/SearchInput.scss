@@ -1,0 +1,15 @@
+@import "@app/styles/vars.scss";
+
+.searchInput {
+  @include flex(flex, row, start, center);
+  gap: 8px;
+  border: 1px solid #e8e8e8;
+  border-radius: 68px;
+  padding: 14px 24px;
+  width: 100%;
+
+  button {
+    border: none;
+    background-color: transparent;
+  }
+}

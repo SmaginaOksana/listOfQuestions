@@ -1,0 +1,23 @@
+@import "@app/styles/vars.scss";
+
+.pagination {
+  @include flex(flex, row, space-between, center);
+  gap: 4px;
+  margin: auto;
+  max-width: 233px;
+  button {
+    background-color: transparent;
+    border: none;
+  }
+  .pageNumber {
+    @include font(14px, 500, 120%);
+    color: var(--secondary-color);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+  .activePage {
+    @include font(14px, 600, 150%);
+    color: var(--white-color);
+    background-color: var(--purple-color);
+  }
+}
