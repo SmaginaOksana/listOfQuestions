@@ -1,3 +1,1 @@
-import Header from "./ui/Header/Header";
-
-export { Header };
+export { default } from "@widgets/Header/ui/Header/Header";

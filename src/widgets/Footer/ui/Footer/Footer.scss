@@ -35,9 +35,14 @@
       color: #8c8c8c;
       @include font(14px, 400, 127%);
       @include flex(flex, row, space-between, center);
-      .links {
+      .linksWrapper {
         @include flex(flex, row, space-between, center);
         gap: 8px;
+        .links {
+          @include flex(flex, row, space-between, center);
+          gap: 8px;
+          list-style: none;
+        }
       }
     }
   }

@@ -1,13 +1,14 @@
 import parse from "html-react-parser";
 
 import useToggle from "@shared/utils/hooks/useToggle";
+import { type IQuestionProps } from "@entities/question/modal/types";
 import arrow_closed from "@shared/assets/arrow_closed.svg";
 import arrow_opened from "@shared/assets/arrow_opened.svg";
 
-import "./Question.scss";
+import "@entities/question/ui/Question/Question.scss";
 
-function Question({ question }) {
-  const [isOpen, handleToggle] = useToggle();
+function Question({ question }: IQuestionProps) {
+  const { isOpen, handleToggle } = useToggle();
   const { title, rate, imageSrc, complexity, shortAnswer } = question;
 
   return (

@@ -1,54 +1,78 @@
-import { useContext, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
-import { Question } from "@entities/question/index";
-import PaginationSection from "../../../../shared/ui/PaginationSection/PaginationSection";
-import { ContextFilters } from "../../../../shared/context/ContextFilters";
-import Skeleton from "../../../../shared/ui/Skeleton/Skeleton";
+import Question from "@entities/question/index";
+import usePagination from "@shared/utils/hooks/usePagination";
+import Skeleton from "@shared/ui/Skeleton/Skeleton";
+import { useGetQuestionsQuery } from "@widgets/QuestionsSection/api/questionsApi";
+import { useAppSelector } from "@app/store/hooks";
 
-import "./QuestionsSection.scss";
+import "@widgets/QuestionsSection/ui/QuestionsSection/QuestionsSection.scss";
+
+const PAGE_LIMIT = 10;
 
 function QuestionsSection() {
+  const filters = useAppSelector((state) => state.filters);
   const {
-    filters,
-    selectedSpecialization,
-    questions,
-    loading,
-    error,
-    currentPage,
-    setCurrentPage,
-  } = useContext(ContextFilters);
+    specializationTitle,
+    specializationId,
+    skills,
+    complexity,
+    rate,
+    search: title,
+  } = filters;
+
+  const { currentPage, setCurrentPage, PaginationRender } =
+    usePagination(PAGE_LIMIT);
+
+  const paramsQuestions = useMemo(
+    () => ({
+      specializationId: specializationId || undefined,
+      skills: (skills.length && skills.map((item) => +item)) || undefined,
+      complexity:
+        (complexity.length &&
+          complexity.flatMap((item) => item.split(" ")).map((item) => +item)) ||
+        undefined,
+      rate: (rate.length && rate.map((item) => +item)) || undefined,
+      title,
+      page: currentPage,
+      limit: PAGE_LIMIT,
+    }),
+    [filters, currentPage]
+  );
+
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useGetQuestionsQuery(paramsQuestions);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
 
-  const content = () => {
-    if (loading) {
+  const content = useMemo(() => {
+    if (isLoading) {
       return <Skeleton />;
     }
-    if (error) {
-      return <p className="error">{error.message}</p>;
+    if (isError) {
+      return <p className="error">Ошибка при получении данных</p>;
     }
-    if (questions?.data?.length === 0) {
+    if (questions?.data.length === 0) {
       return <p className="empty">Вопросы не найдены...</p>;
     }
 
-    return questions?.data?.map((question) => {
+    return questions?.data.map((question) => {
       return <Question question={question} key={question.id} />;
     });
-  };
+  }, [isLoading, isError, questions]);
 
   return (
     <section>
-      <h1>Вопросы: {selectedSpecialization?.title}</h1>
+      <h1>Вопросы: {specializationTitle}</h1>
       <hr />
-      <div className="questions">{content()}</div>
+      <div className="questions">{content}</div>
       {questions && questions.data.length > 0 && (
-        <PaginationSection
-          dataLength={questions.total}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        <PaginationRender dataLength={questions.total} />
       )}
     </section>
   );

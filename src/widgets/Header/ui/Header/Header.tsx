@@ -1,7 +1,7 @@
 import yeahub_logo from "@shared/assets/yeahub_logo.svg";
 import text_logo from "@shared/assets/yeahub_dark_logo.png";
 
-import "./Header.scss";
+import "@widgets/Header/ui/Header/Header.scss";
 
 function Header() {
   return (

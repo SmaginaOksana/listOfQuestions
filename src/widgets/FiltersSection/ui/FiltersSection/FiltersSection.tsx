@@ -1,21 +1,35 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
-import { SearchInput } from "@features/search/index";
-import { Filter } from "@entities/filter/index";
-import { ContextFilters } from "../../../../shared/context/ContextFilters";
+import {
+  SearchInput,
+  FilterSpecialization,
+  FilterStatus,
+  FilterRate,
+  FilterComplexity,
+  FilterSkill,
+} from "@features/filter/filter-questions/index";
+import { useAppDispatch } from "@app/store/hooks";
+import { updateFilter } from "@features/filter/filter-questions/model/filtersSlice";
+import { FilterName } from "@features/filter/filter-questions/model/types";
 
-import "./FiltersSection.scss";
+import "@widgets/FiltersSection/ui/FiltersSection/FiltersSection.scss";
 
 function FiltersSection() {
   const [searchValue, setSearchValue] = useState("");
-  const { content, handleChangeFilter } = useContext(ContextFilters);
+
+  const dispatch = useAppDispatch();
 
   const handleChangeInput = (e) => {
     setSearchValue(e.target.value.trim());
   };
 
   const handleSearch = () => {
-    handleChangeFilter("title", searchValue);
+    dispatch(
+      updateFilter({
+        name: FilterName.Search,
+        value: searchValue,
+      })
+    );
     setSearchValue("");
   };
 
@@ -26,18 +40,11 @@ function FiltersSection() {
         onChange={handleChangeInput}
         onClick={handleSearch}
       />
-      {content.map((item) => {
-        const { filterName, title, buttons, id } = item;
-
-        return (
-          <div key={id}>
-            <h3>{title}</h3>
-            <div className="filters">
-              <Filter buttons={buttons} filterName={filterName} />
-            </div>
-          </div>
-        );
-      })}
+      <FilterSpecialization />
+      <FilterSkill />
+      <FilterComplexity />
+      <FilterRate />
+      <FilterStatus />
     </aside>
   );
 }

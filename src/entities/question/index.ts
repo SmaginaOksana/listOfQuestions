@@ -1,3 +1,1 @@
-import Question from "./ui/Question/Question";
-
-export { Question };
+export { default } from "@entities/question/ui/Question/Question";

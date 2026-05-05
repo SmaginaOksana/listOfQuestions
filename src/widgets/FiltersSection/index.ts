@@ -1,3 +1,1 @@
-import FiltersSection from "./ui/FiltersSection/FiltersSection";
-
-export { FiltersSection };
+export { default } from "@widgets/FiltersSection/ui/FiltersSection/FiltersSection";

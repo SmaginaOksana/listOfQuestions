@@ -1,3 +1,1 @@
-import QuestionsPage from "./QuestionsPage/QuestionsPage";
-
-export { QuestionsPage };
+export { default } from "@pages/QuestionsPage/QuestionsPage";

@@ -1,10 +1,11 @@
-import imagesFooter from "../../content";
+import "@widgets/Footer/ui/Footer/Footer";
 
-import "./Footer.scss";
+import links from "@widgets/Footer/ui/Footer/contentFooter";
+import text from "@shared/assets/yeahub_light_logo.png";
+
+import "@widgets/Footer/ui/Footer/Footer.scss";
 
 function Footer() {
-  const [text, figma, telegram, youtube, github, sign] = imagesFooter;
-
   return (
     <footer className="footer">
       <div className="container container_footer">
@@ -24,23 +25,17 @@ function Footer() {
         <hr />
         <div className="socialLinks">
           <p>&copy; 2024 YeaHub Документы</p>
-          <div className="links">
+          <div className="linksWrapper">
             <p>Ищите нас и в других соцсетях @yeahub_it</p>
-            <a href="#" target="_blank">
-              <img src={figma} alt="figma" />
-            </a>
-            <a href="#" target="_blank">
-              <img src={telegram} alt="telegram" />
-            </a>
-            <a href="#" target="_blank">
-              <img src={youtube} alt="youtube" />
-            </a>
-            <a href="#" target="_blank">
-              <img src={sign} alt="sign" />
-            </a>
-            <a href="#" target="_blank">
-              <img src={github} alt="github" />
-            </a>
+            <ul className="links">
+              {links.map(({ imgSrc, alt }) => (
+                <li key={alt}>
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    <img src={imgSrc} alt={alt} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

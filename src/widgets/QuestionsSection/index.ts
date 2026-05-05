@@ -1,3 +1,1 @@
-import QuestionsSection from "./ui/QuestionsSection/QuestionsSection";
-
-export { QuestionsSection };
+export { default } from "@widgets/QuestionsSection/ui/QuestionsSection/QuestionsSection";

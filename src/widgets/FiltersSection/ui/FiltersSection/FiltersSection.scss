@@ -14,9 +14,4 @@ aside {
     color: var(--secondary-color);
     margin-bottom: 8px;
   }
-  .filters {
-    @include flex(flex, row, start, start);
-    gap: 8px;
-    flex-wrap: wrap;
-  }
 }

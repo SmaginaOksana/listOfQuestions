@@ -1,4 +1,4 @@
-import "./Skeleton.scss";
+import "@shared/ui/Skeleton/Skeleton.scss";
 
 function Skeleton() {
   return (
