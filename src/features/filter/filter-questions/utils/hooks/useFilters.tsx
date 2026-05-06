@@ -1,44 +1,51 @@
 import { useState, useCallback, useMemo } from "react";
 
-import { useAppDispatch } from "@app/store/hooks";
-import { useAppSelector } from "@app/store/hooks";
-import { FilterName } from "@features/filter/filter-questions/model/types";
+import { useAppDispatch } from "@app/providers/store/hooks";
+import { useAppSelector } from "@app/providers/store/hooks";
+import {
+  FilterName,
+  type ButtonsType,
+  type ButtonType,
+  isObjectButton,
+} from "@features/filter/filter-questions/model/types";
+import FilterButton from "@entities/filter/ui/FilterButton/FilterButton";
 import { updateFilter } from "@features/filter/filter-questions/model/filtersSlice";
-import Button from "@entities/filter/ui/ButtonFilter/ButtonFilter";
 
-type ButtonType = string | { title: string; id: number };
-type ButtonsType = ButtonType[];
-
-const isObjectButton = (
-  btn: ButtonType
-): btn is { title: string; id: number } =>
-  typeof btn === "object" && btn !== null && "id" in btn && "title" in btn;
-
-function useFiltersVisibility(name: FilterName, buttons: ButtonsType = []) {
+function useFilters(name: FilterName, buttons: ButtonsType = []) {
   const [showAllButtons, setShowAllButtons] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+
+  const filters = useAppSelector((state) => state.filters);
+  const selectedFilters = filters[name];
 
   if (!buttons) return;
   const visibleButtons = !showAllButtons ? buttons.slice(0, 5) : buttons;
 
-  const dispatch = useAppDispatch();
-
-  const { [name]: selectedFilters } = useAppSelector((state) => state.filters);
-
   const handleChangeFilter = useCallback(
-    (value: string, id?: number) => {
-      dispatch(updateFilter({ name, value, id }));
+    (value: string) => {
+      dispatch(updateFilter({ name, value }));
     },
     [name]
+  );
+
+  const isActiveFilter = useCallback(
+    (value: string) => {
+      return Array.isArray(selectedFilters)
+        ? selectedFilters.includes(value)
+        : selectedFilters === value;
+    },
+    [selectedFilters]
   );
 
   const content = useMemo(() => {
     return visibleButtons.map((button: ButtonType) => {
       let value: string;
-      let id: number | undefined;
+      let id: string | undefined;
 
       if (isObjectButton(button)) {
         value = button.title;
-        id = button.id;
+        id = String(button.id);
       } else {
         value = button;
         id = undefined;
@@ -49,23 +56,22 @@ function useFiltersVisibility(name: FilterName, buttons: ButtonsType = []) {
           ? `${value.slice(0, 1)}-${value.slice(value.length - 2).trim()}`
           : value;
 
-      const isActive =
-        typeof selectedFilters === "number"
-          ? selectedFilters === id
-          : typeof selectedFilters === "string"
-          ? selectedFilters === value
-          : name === FilterName.Skills
-          ? selectedFilters?.includes(id)
-          : selectedFilters?.includes(value);
-
       return (
-        <Button
+        <FilterButton
           key={value}
-          onClick={() => handleChangeFilter(value, id)}
-          isActive={isActive}
+          onClick={() => {
+            name === FilterName.SpecializationId || name === FilterName.Skills
+              ? handleChangeFilter(id)
+              : handleChangeFilter(value);
+          }}
+          isActive={
+            name === FilterName.SpecializationId || name === FilterName.Skills
+              ? isActiveFilter(id)
+              : isActiveFilter(value)
+          }
         >
           {buttonLabel}
-        </Button>
+        </FilterButton>
       );
     });
   }, [visibleButtons, name, selectedFilters, handleChangeFilter]);
@@ -77,4 +83,4 @@ function useFiltersVisibility(name: FilterName, buttons: ButtonsType = []) {
   };
 }
 
-export default useFiltersVisibility;
+export default useFilters;

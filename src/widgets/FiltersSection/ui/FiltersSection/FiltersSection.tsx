@@ -8,7 +8,7 @@ import {
   FilterComplexity,
   FilterSkill,
 } from "@features/filter/filter-questions/index";
-import { useAppDispatch } from "@app/store/hooks";
+import { useAppDispatch } from "@app/providers/store/hooks";
 import { updateFilter } from "@features/filter/filter-questions/model/filtersSlice";
 import { FilterName } from "@features/filter/filter-questions/model/types";
 

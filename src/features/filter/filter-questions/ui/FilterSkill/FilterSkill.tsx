@@ -1,19 +1,22 @@
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { useGetSkillsQuery } from "@features/filter/filter-questions/api/skillsApi";
 import FiltersWrapper from "@features/filter/filter-questions/ui/FiltersWrapper/FiltersWrapper";
 import { FilterName } from "@features/filter/filter-questions/model/types";
-import useFilters from "@features/filter/filter-questions/utils/hooks/useFilters";
-import { useAppSelector } from "@app/store/hooks";
+import useFilters from "@features/filter/filter-questions/utils/hooks/useFilters.tsx";
+import { useAppSelector } from "@app/providers/store/hooks";
 
 function FilterSkill() {
+  const [params] = useSearchParams();
+
   const id = useAppSelector(
     (state) => state.filters[FilterName.SpecializationId]
   );
 
   const paramsSkills = useMemo(
-    () => (id && { specializations: id }) || undefined,
-    [id]
+    () => ({ specializations: +params.get(FilterName.SpecializationId) }),
+    [id, params]
   );
 
   const { data: skills } = useGetSkillsQuery(paramsSkills);

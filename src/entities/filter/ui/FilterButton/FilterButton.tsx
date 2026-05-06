@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { type IButtonProps } from "@entities/filter/modal/types";
 
-import "@entities/filter/ui/ButtonFilter/ButtonFilter.scss";
+import "@entities/filter/ui/FilterButton/FilterButton.scss";
 
-export default function Button({
+const FilterButton = memo(function FilterButton({
   children,
   isActive,
   onClick,
@@ -15,4 +16,6 @@ export default function Button({
       {children}
     </button>
   );
-}
+});
+
+export default FilterButton;

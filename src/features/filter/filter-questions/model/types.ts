@@ -1,5 +1,4 @@
 export enum FilterName {
-  SpecializationTitle = "specializationTitle",
   SpecializationId = "specializationId",
   Skills = "skills",
   Complexity = "complexity",
@@ -9,29 +8,31 @@ export enum FilterName {
 }
 
 export interface IInitialStateFilters {
-  [FilterName.SpecializationTitle]: string;
-  [FilterName.SpecializationId]: number;
-  [FilterName.Skills]: number[];
+  [FilterName.SpecializationId]: string;
+  [FilterName.Skills]: string[];
   [FilterName.Complexity]: string[];
   [FilterName.Rate]: string[];
   [FilterName.Status]: string;
   [FilterName.Search]: string;
 }
 
-export interface ISpecializationsParams {
-  limit: number;
+export interface IAllSpecializationsParams {
+  limit?: number;
 }
+export type ISpecializationParams = number;
+
 export interface ISpecialization {
   id: number;
   title: string;
   description: string;
 }
-export interface ISpecializationsResponce {
+export interface IAllSpecializationsResponce {
   data: ISpecialization[];
 }
+export interface ISpecializationResponce extends ISpecialization {}
 
 export interface ISkillsParams {
-  specializations: number;
+  specializations?: number;
 }
 export interface ISkill {
   id: number;
@@ -41,3 +42,11 @@ export interface ISkill {
 export interface ISkillsResponce {
   data: ISkill[];
 }
+
+export type ButtonType = string | { title: string; id: number };
+export type ButtonsType = ButtonType[];
+
+export const isObjectButton = (
+  btn: ButtonType
+): btn is { title: string; id: number } =>
+  typeof btn === "object" && btn !== null && "id" in btn && "title" in btn;

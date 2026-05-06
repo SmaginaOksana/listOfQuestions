@@ -1,54 +1,60 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, memo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import Question from "@entities/question/index";
 import usePagination from "@shared/utils/hooks/usePagination";
 import Skeleton from "@shared/ui/Skeleton/Skeleton";
 import { useGetQuestionsQuery } from "@widgets/QuestionsSection/api/questionsApi";
-import { useAppSelector } from "@app/store/hooks";
+import { useGetSpecializationQuery } from "@features/filter/filter-questions/api/specializationsApi";
+import { useAppSelector } from "@app/providers/store/hooks";
+import { FilterName } from "@features/filter/filter-questions/model/types";
 
 import "@widgets/QuestionsSection/ui/QuestionsSection/QuestionsSection.scss";
 
 const PAGE_LIMIT = 10;
 
-function QuestionsSection() {
+const QuestionsSection = memo(function QuestionsSection() {
+  const [params, setParams] = useSearchParams();
+
   const filters = useAppSelector((state) => state.filters);
-  const {
-    specializationTitle,
-    specializationId,
-    skills,
-    complexity,
-    rate,
-    search: title,
-  } = filters;
+  console.log(params);
+
+  const { specializationId } = filters;
 
   const { currentPage, setCurrentPage, PaginationRender } =
     usePagination(PAGE_LIMIT);
 
-  const paramsQuestions = useMemo(
-    () => ({
-      specializationId: specializationId || undefined,
-      skills: (skills.length && skills.map((item) => +item)) || undefined,
-      complexity:
-        (complexity.length &&
-          complexity.flatMap((item) => item.split(" ")).map((item) => +item)) ||
-        undefined,
-      rate: (rate.length && rate.map((item) => +item)) || undefined,
-      title,
-      page: currentPage,
-      limit: PAGE_LIMIT,
-    }),
-    [filters, currentPage]
-  );
+  const { data } = useGetSpecializationQuery(+specializationId);
 
   const {
     data: questions,
     isLoading,
     isError,
-  } = useGetQuestionsQuery(paramsQuestions);
+  } = useGetQuestionsQuery(params.toString());
 
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (Array.isArray(value) && value.length > 0) {
+        key === FilterName.Complexity
+          ? value
+              .flatMap((v) => v.split(" "))
+              .forEach((v) => searchParams.append(key, v))
+          : value.forEach((v) => searchParams.append(key, v));
+      } else if (typeof value === "string" && value) {
+        searchParams.set(key, value);
+      }
+    });
+
+    searchParams.set("page", String(currentPage));
+
+    setParams(searchParams, { replace: true });
+  }, [filters, currentPage, setParams]);
 
   const content = useMemo(() => {
     if (isLoading) {
@@ -68,7 +74,7 @@ function QuestionsSection() {
 
   return (
     <section>
-      <h1>Вопросы: {specializationTitle}</h1>
+      <h1>Вопросы: {data?.title}</h1>
       <hr />
       <div className="questions">{content}</div>
       {questions && questions.data.length > 0 && (
@@ -76,6 +82,6 @@ function QuestionsSection() {
       )}
     </section>
   );
-}
+});
 
 export default QuestionsSection;

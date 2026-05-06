@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@app/store/hooks";
+import { useAppDispatch } from "@app/providers/store/hooks";
 import { resetState } from "../../model/filtersSlice";
 import Input from "@shared/ui/Input/Input";
 import search_icon from "@shared/assets/search_icon.svg";

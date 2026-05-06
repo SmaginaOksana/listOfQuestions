@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = "https://api.yeatwork.ru/";
+const baseUrl = "https:/api.yeatwork.ru/";
 
 const baseApi = createApi({
   reducerPath: "baseApi",

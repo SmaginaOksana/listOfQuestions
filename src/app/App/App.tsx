@@ -1,19 +1,8 @@
-import Header from "@widgets/Header/index";
-import Footer from "@widgets/Footer/index";
-import QuestionsPage from "@pages/index";
-
-import "@app/App/App.scss";
+import { RouterProvider } from "react-router-dom";
+import { router } from "@app/providers/router/router";
 
 function App() {
-  return (
-    <div className="wrapper">
-      <Header />
-      <main>
-        <QuestionsPage />
-      </main>
-      <Footer />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -2,13 +2,13 @@ import baseApi from "@shared/api.ts/baseApi";
 import { type IQuestion } from "@entities/question/modal/types";
 
 interface IQuestionsParams {
-  specializationId: number;
-  skills: number[];
-  complexity: number[];
-  rate: number[];
-  title: string;
-  page: number;
-  limit: number;
+  specializationId?: number;
+  skills?: number[];
+  complexity?: number[];
+  rate?: number[];
+  title?: string;
+  page?: number;
+  limit?: number;
 }
 
 interface IQuestionsResponce {
@@ -21,9 +21,7 @@ interface IQuestionsResponce {
 const questionsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getQuestions: builder.query<IQuestionsResponce, IQuestionsParams>({
-      query: (params) => {
-        return { url: `questions/public-questions`, params };
-      },
+      query: (params) => ({ url: `questions/public-questions`, params }),
       providesTags: ["Questions"],
     }),
   }),

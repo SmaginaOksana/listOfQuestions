@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
-import { useGetSpecializationsQuery } from "../../api/specializationsApi";
+import { useGetAllSpecializationsQuery } from "../../api/specializationsApi";
 import FiltersWrapper from "@features/filter/filter-questions/ui/FiltersWrapper/FiltersWrapper";
 import { FilterName } from "@features/filter/filter-questions/model/types";
-import useFilters from "@features/filter/filter-questions/utils/hooks/useFilters";
+import useFilters from "@features/filter/filter-questions/utils/hooks/useFilters.tsx";
 
 function FilterSpecialization() {
   const paramsSpecializations = useMemo(
@@ -13,7 +13,7 @@ function FilterSpecialization() {
     []
   );
 
-  const { data: specializations } = useGetSpecializationsQuery(
+  const { data: specializations } = useGetAllSpecializationsQuery(
     paramsSpecializations
   );
 

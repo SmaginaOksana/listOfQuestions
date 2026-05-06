@@ -9,8 +9,7 @@ import {
 } from "@features/filter/filter-questions/model/types";
 
 const initialState: IInitialStateFilters = {
-  [FilterName.SpecializationTitle]: "",
-  [FilterName.SpecializationId]: null,
+  [FilterName.SpecializationId]: "11",
   [FilterName.Skills]: [],
   [FilterName.Complexity]: [],
   [FilterName.Rate]: [],
@@ -29,30 +28,17 @@ const filtersSlice = createSlice({
       action: PayloadAction<{
         name: FilterName;
         value: string;
-        id?: number;
       }>
     ) => {
-      const { name, value, id } = action.payload;
+      const { name, value } = action.payload;
 
       switch (name) {
         case FilterName.SpecializationId:
-          if (state[name] === id) {
-            state[name] = null;
-            state[FilterName.SpecializationTitle] = "";
-          } else {
-            state[name] = id;
-            state[FilterName.SpecializationTitle] = value;
-          }
+          state[name] = value;
           state[FilterName.Skills] = [];
-          state[FilterName.Search] = "";
           break;
 
         case FilterName.Skills:
-          state[name].includes(id)
-            ? (state[name] = state[name].filter((el) => el !== id))
-            : state[name].push(id);
-          break;
-
         case FilterName.Complexity:
         case FilterName.Rate:
           state[name].includes(value)
