@@ -17,7 +17,6 @@ const QuestionsSection = memo(function QuestionsSection() {
   const [params, setParams] = useSearchParams();
 
   const filters = useAppSelector((state) => state.filters);
-  console.log(params);
 
   const { specializationId } = filters;
 

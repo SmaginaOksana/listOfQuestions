@@ -16,17 +16,15 @@ function useFilters(name: FilterName, buttons: ButtonsType = []) {
 
   const dispatch = useAppDispatch();
 
-  const filters = useAppSelector((state) => state.filters);
-  const selectedFilters = filters[name];
+  const selectedFilters = useAppSelector((state) => state.filters[name]);
 
-  if (!buttons) return;
   const visibleButtons = !showAllButtons ? buttons.slice(0, 5) : buttons;
 
   const handleChangeFilter = useCallback(
     (value: string) => {
       dispatch(updateFilter({ name, value }));
     },
-    [name]
+    [dispatch, name]
   );
 
   const isActiveFilter = useCallback(

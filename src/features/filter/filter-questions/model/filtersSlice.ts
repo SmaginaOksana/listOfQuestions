@@ -34,6 +34,8 @@ const filtersSlice = createSlice({
 
       switch (name) {
         case FilterName.SpecializationId:
+          if (state[name] === value) return;
+
           state[name] = value;
           state[FilterName.Skills] = [];
           break;

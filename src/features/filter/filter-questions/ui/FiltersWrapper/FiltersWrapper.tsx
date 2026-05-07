@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction, memo } from "react";
 
 import "@features/filter/filter-questions/ui/FiltersWrapper/FiltersWrapper.scss";
 
@@ -9,7 +9,7 @@ interface IFiltersWrapperProps {
   setShowAllButtons?: Dispatch<SetStateAction<boolean>>;
 }
 
-function FiltersWrapper({
+const FiltersWrapper = memo(function FiltersWrapper({
   filterName,
   children,
   showAllButtons,
@@ -31,6 +31,6 @@ function FiltersWrapper({
       </div>
     </div>
   );
-}
+});
 
 export default FiltersWrapper;
