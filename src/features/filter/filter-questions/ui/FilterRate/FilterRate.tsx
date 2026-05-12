@@ -1,4 +1,4 @@
-import FiltersWrapper from "@features/filter/filter-questions/ui/FiltersWrapper/FiltersWrapper";
+import FiltersWrapper from "@shared/ui/FiltersWrapper/FiltersWrapper";
 import { FilterName } from "@features/filter/filter-questions/model/types";
 import useFilters from "@features/filter/filter-questions/utils/hooks/useFilters";
 

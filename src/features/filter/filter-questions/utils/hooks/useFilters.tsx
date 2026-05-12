@@ -8,7 +8,7 @@ import {
   type ButtonType,
   isObjectButton,
 } from "@features/filter/filter-questions/model/types";
-import FilterButton from "@entities/filter/ui/FilterButton/FilterButton";
+import FilterButton from "@features/filter/filter-questions/ui/FilterButton/FilterButton";
 import { updateFilter } from "@features/filter/filter-questions/model/filtersSlice";
 
 function useFilters(name: FilterName, buttons: ButtonsType = []) {
