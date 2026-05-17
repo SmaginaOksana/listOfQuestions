@@ -1,4 +1,4 @@
-import baseApi from "@shared/api.ts/baseApi";
+import baseApi from "@shared/api/baseApi";
 
 import {
   type IAllSpecializationsParams,

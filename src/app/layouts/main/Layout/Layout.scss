@@ -14,6 +14,9 @@
   }
   a {
     text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   a img {
     transition: 0.3s;

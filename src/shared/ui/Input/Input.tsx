@@ -1,7 +1,7 @@
+import { type IInputProps } from "@shared/modal/types";
+
 import "@shared/ui/Input/Input.scss";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-export default function Input(props: InputProps) {
+export default function Input(props: IInputProps) {
   return <input {...props} />;
 }

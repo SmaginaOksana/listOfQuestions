@@ -1,3 +1,7 @@
+import { NavLink, Link } from "react-router-dom";
+
+import AuthLinks from "@features/user/navigate-to-auth/ui/AuthLinks/AuthLinks";
+
 import yeahub_logo from "@shared/assets/yeahub_logo.svg";
 import text_logo from "@shared/assets/yeahub_dark_logo.png";
 
@@ -9,33 +13,30 @@ function Header() {
       <div className="container container_header">
         <nav className="nav">
           <div className="logo">
-            <a href="#">
+            <Link to="#">
               <img src={yeahub_logo} alt="yeahub_logo" className="logo-image" />
               <img src={text_logo} alt="text_logo" />
-            </a>
+            </Link>
           </div>
           <ul className="nav-list">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink to="/" className="navlink">
                 База вопросов
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink to="/" className="navlink">
                 Тренажер
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink to="/" className="navlink">
                 Материалы
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>
-        <div className="buttons">
-          <button className="button--white">Вход</button>
-          <button className="button--purple">Регистрация</button>
-        </div>
+        <AuthLinks />
       </div>
     </header>
   );

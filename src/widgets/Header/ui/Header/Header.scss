@@ -22,30 +22,16 @@
         gap: 20px;
         .nav-item {
           list-style: none;
-          .nav-link {
+          .navlink {
             @include font(16px, 500, 140%);
             color: var(--primary-color);
           }
+          .navlink.active {
+            color: var(--purple-color);
+            text-decoration: underline;
+            border: none;
+          }
         }
-      }
-    }
-    .buttons {
-      @include flex(flex, row, start, center);
-      gap: 26px;
-      .button--white {
-        border: none;
-        background-color: transparent;
-        color: var(--purple-color);
-        @include font(16px, 600, 110%);
-      }
-      .button--purple {
-        border: none;
-        width: 170px;
-        height: 48px;
-        background-color: var(--purple-color);
-        color: var(--white-color);
-        @include font(18px, 500, 100%);
-        border-radius: 12px;
       }
     }
   }
